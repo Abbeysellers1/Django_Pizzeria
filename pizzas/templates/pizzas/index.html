@@ -1,0 +1,14 @@
+{% extends 'pizzas/base.html' %}
+
+
+{% block page_header %}
+    <div class="jumbotron">
+       <h1 class="display-3">Pizzeria</h1>
+            <p class="lead">Welcome to the Pizzeria! We hope to provide you with the best pizzas with high quality
+                ingredients. Travel through our page to find all of our options!
+            </p>
+
+            <a class="btn btn-lg btn-outline-primary" href="{% url 'users:register' %}"
+            role="button">Parooz the Pizzas &raquo;</a>
+    </div>
+{% endblock page_header %}
