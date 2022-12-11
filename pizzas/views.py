@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import *
+from .forms import CommentForm
 
 # Create your views here.
 def index(request):
@@ -18,3 +20,21 @@ def pizza(request, pizza_id):
 
     context= {'pizza':p, 'toppings':toppings}
     return render(request, 'pizzas/pizza.html', context)
+
+@login_required
+def comments(request):
+    if request.method == 'POST' and request.POST.get('btn1'):
+        form= CommentForm()
+        #comment = request.POST.get('comment')
+        #Comment.objects.create(pizza_id=pizza_id,username=request.user, text=comment,date_added=date.today())
+    #comments = Comment.objects.filter(pizza=pizza_id)
+    #pizza = Pizza.objects.get(id=pizza_id)
+    else:
+        form=CommentForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('pizzas:index')
+
+    context = {'pizza': pizza, 'comments':comments}
+
+    return render(request, 'pizza/comments.html', context)
