@@ -23,10 +23,11 @@ def pizza(request, pizza_id):
     return render(request, 'pizzas/pizza.html', context)
 
 @login_required
+
 def comments(request, pizza_id):
     form=CommentForm(data=request.POST)
     comments=Pizza.objects.get(id=pizza_id)
-    comments = Comment.objects.filter(pizza=pizza_id)
+    comments = Comment.objects.all().filter(pizza=pizza_id)
     pizza = Pizza.objects.get(id=pizza_id)
     if request.method == 'POST' and request.POST.get('btn1'):
         form= CommentForm()
@@ -40,12 +41,22 @@ def comments(request, pizza_id):
             comments.save()
             return redirect('pizzas:index')
 
-    context = {'pizza': pizza, 'form':form}
+    context = {'pizza': pizza, 'form':form, 'comments':comments}
 
     return render(request, 'pizzas/comments.html', context)
-
-
 '''
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comments = form.save(commit=False)
+            comments.user_id = request.user
+            comments.message= comments
+            comments.save()
+            return redirect('comments', pizza_id=pizza_id)
+        else:
+            form=CommentForm()
+    return render(request, "pizzas/comments.html", {'pizza':pizza, 'form': form})
+
     template_name = 'pizza_comment.html'
     post = get_object_or_404(Pizza, slug=slug)
     comments = post.comments.filter(active=True)
@@ -60,7 +71,6 @@ def comments(request, pizza_id):
         else:
             comment_form = CommentForm()
         return render(request, template_name, {'post':post, 'comments': comments, 'new_comment': new_comment, 'comment_form': comment_form})
-
 def comments(request):
     if request.method == 'POST' and request.POST.get('btn1'):
         form= CommentForm()

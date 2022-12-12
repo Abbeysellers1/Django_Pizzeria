@@ -2,24 +2,26 @@
 
 {% block content %}
 
-<p>Add a comment about a pizza:</p>
+<body bgcolor="beige"></body>
 <p><a href ="{% url 'pizzas:pizza' pizza.id %}">{{ pizza }}</a></p>
-<p>Add a comment:</p>
 
-<form method="POST" action="{% url 'pizzas:comments' pizza.id %}" >
-    {% csrf_token %}
-    {% for p in comments %}
-    {{ form.as_p }}
-    <li>
-        <p> {{p.text}} &nbsp -- &nbsp {{ p.username }}</p>
-    </li>
-    {% empty %}
-    <li> There are no comments for this post.</li>
-    {% endfor %}
-<p><input type="text" name='comment'></p>
-<p><button type='submit' name="'btn1' value=1">Submit Comment</button></p>
 
+<ul>
+    <p>Comments</p>
+
+        <p> {% for c in comments %}</p>
+
+        <li>{{ c.text }}</li>
+
+        {% endfor %}
+</ul>
+<p>Add a comment about a pizza:</p>
+<form action=" " method="post"> {% csrf_token %}
+    {{ form }}
+    <p>{{response}}</p>
+    <input type="submit" value="Submit" />
 </form>
-<p>{{ comments }}</p>
+
+
 
 {% endblock content %}
