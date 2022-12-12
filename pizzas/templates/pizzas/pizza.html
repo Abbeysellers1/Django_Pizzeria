@@ -4,17 +4,27 @@
 {% block content %}
 <p> Pizza: {{ pizza }} </p>
 
+<body bgcolor="lightgreen"></body>
+
+
 <ul>
+    <p>Toppings</p>
     {% for t in toppings %}
 
 
-    <li>{{ t.topping_name}}</li>
+    <li><font size='4'>{{ t.topping_name}}</font></li>
 
     {% empty %}
     <li> No toppings have been added for this pizza.</li>
 
     {% endfor %}
+
+    
+    <p>       <font size="5">
+        <a href="{% url 'pizzas:comments' pizza.id %}"> {{ pizza }} Comments</a></font>
+      
+    </p> 
 </ul>
-<a href="{% url 'pizzas:comments' %}">Add a comment about this pizza</a>
+
 
 {% endblock content %}

@@ -2,16 +2,17 @@
 
 
 {% block content %}
-<p> Pizzas </p>
+<p> <font size='4'>Pizzas </font></p>
 
+<body bgcolor="lightyellow"></body>
 <ul>
     {% for pizza in all_pizzas %}
 
 
     <li>
-        
-        <a href="{% url 'pizzas:pizza' pizza.id %}"> {{ pizza }} </a>
-    
+        <font size="5">
+        <a href="{% url 'pizzas:pizza' pizza.id %}"> {{ pizza }} </a></font>
+      
     </li>
 
     {% empty %}

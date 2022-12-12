@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 
 class Pizza(models.Model):
     pizza_name = models.CharField(max_length=200)
-    owner=models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return self.pizza_name
 
@@ -17,10 +16,14 @@ class Topping(models.Model):
         return self.topping_name
 
 class Comment(models.Model):
-    post = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    username = models.ForeignKey(User, related_name='details', on_delete=models.CASCADE)
-    text = models.CharField(max_length=200)
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True,blank=True)
+    
+
+    class Meta:
+        ordering=['date_added']
 
     def __str__(self):
-        return self.text
+        return 'Comment {} by {}'.format(self.text, self.name)
